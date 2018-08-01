@@ -1,0 +1,12 @@
+{
+    "applicationName": "kn test app14",
+    "replyURLs": [
+        "https://localhost/callback",
+        "https://app.trygdeetaten.no/callback"
+    ],
+    "owners": [
+        "kn@navq.onmicrosoft.com",
+        "kjetil.nordlund@trygdeetaten.no"
+    ]
+
+}
