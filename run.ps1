@@ -7,7 +7,7 @@
 
 # POST method: $req
 $requestBody = Get-Content $req -Raw | ConvertFrom-Json
-#$name = $requestBody.name
+
 
 
 Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenantid
@@ -26,15 +26,9 @@ $applicationName = $requestbody.applicationName
 $domainname = "trygdeetaten.no"
 $ApplicationURI = $("https://$DomainName/$($applicationName -Replace('[\W]',''))")
 $logoutURI = "https://login.microsoftonline.com/common/oauth2/logout"
-#$replyurls = (
-#    "https://localhost/callback",
-#    "https://app.trygdeetaten.no/callback"
-#)
+
 $replyurls = $requestbody.replyURLs
-#$owners = (
-#    "kn@navq.onmicrosoft.com",
-#    "kjetil.nordlund@trygdeetaten.no"
-#)
+
 $owners = $requestbody.owners
 
 $GroupMembershipClaims = "SecurityGroup"
@@ -59,12 +53,12 @@ $aadSecret = @{
 
 $secret = ConvertTo-SecureString -string $key -AsPlainText -Force
 
-#$vaultkey = Add-AzureKeyVaultKey -inputObject $key -VaultName azureSelfServiceKeys -name testkey -Destination Software
+
 $vaultSecret = Set-AzureKeyVaultSecret -VaultName $vaultname -name $($applicationName -Replace('[\W]','')) -SecretValue $secret
-#$key = Get-AzureKeyVaultSecret -VaultName azureSelfServiceKeys -name testkey
+
 
 $app = New-AzureADApplication -IdentifierUris $ApplicationURI -DisplayName $ApplicationName -GroupMembershipClaims $GroupMembershipClaims -homepage $ApplicationURI -logoutUrl $logoutURI -PasswordCredentials $aadSecret -ReplyUrls $replyurls
-#New-AzureADApplication -IdentifierUris $ApplicationURI -DisplayName $ApplicationName -PasswordCredentials $aadSecret
+
 
 
 foreach ($owner in $owners)
@@ -76,7 +70,7 @@ foreach ($owner in $owners)
 
 $resServicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $app.appID
 
-#$resAddSPP = Add-AzureADServicePrincipalPolicy -Id $resServicePrincipal.Id -RefObjectId $ClaimsPolicy
+
 
 $teamsbody = ConvertTo-Json -Depth 4 @{
     title = "Ny applikasjon er registrert"
