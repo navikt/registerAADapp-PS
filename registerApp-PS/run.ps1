@@ -2,7 +2,7 @@
 #Import-Module "D:\home\site\wwwroot\User_MFA\additionalmodules\AzureADPreview\2.0.1.18\AzureADPreview.psd1" -Global;
 #Import-Module AzureADPreview
 . .\createKey.ps1
-. .\config.ps1
+. .\..\config.ps1
 
 
 # POST method: $req
