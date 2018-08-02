@@ -1,9 +1,24 @@
-#Import-Module "D:\home\site\wwwroot\User_MFA\additionalmodules\MSOnline\1.1.183.8\MSOnline.psd1" -Global;
-#Import-Module "D:\home\site\wwwroot\User_MFA\additionalmodules\AzureADPreview\2.0.1.18\AzureADPreview.psd1" -Global;
+#Import-Module "D:\home\site\wwwroot\registerApp-PS\additionalmodules\MSOnline\1.1.183.8\MSOnline.psd1" -Global;
+#Import-Module "D:\home\site\wwwroot\registerApp-PS\additionalmodules\AzureADPreview\2.0.1.18\AzureADPreview.psd1" -Global;
+#Import-Module "D:\home\site\wwwroot\registerApp-PS\additionalmodules\AzureRM.Profile\4.6.0\AzureRM.Profile.psd1" -Global;
+#Import-Module "D:\home\site\wwwroot\registerApp-PS\additionalmodules\AzureRM.KeyVault\4.3.0\AzureRM.KeyVault.psd1" -Global;
+#Import-Module "D:\home\site\wwwroot\registerApp-PS\additionalmodules\AzureRM.Resources\5.5.2\AzureRM.Resources.psd1" -Global;
 #Import-Module AzureADPreview
 . .\createKey.ps1
+#. "D:\home\site\wwwroot\registerApp-PS\createKey.ps1"
 . .\..\config.ps1
 
+$tenantid = $ENV:APPSETTING_tenantid
+$applicationId = $ENV:APPSETTING_applicationId
+$appSecret = $ENV:APPSETTING_appSecret
+$appSecretToken = $ENV:APPSETTING_appSecretToken
+$tokenAuthURI = $ENV:APPSETTING_tokenAuthURI
+$certThumbprint = $ENV:APPSETTING_certThumbprint
+$secretWebhook = $ENV:APPSETTING_secretWebhook
+
+
+$securePassword = $appSecret | ConvertTo-SecureString -AsPlainText -Force
+$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $securePassword
 
 # POST method: $req
 $requestBody = Get-Content $req -Raw | ConvertFrom-Json

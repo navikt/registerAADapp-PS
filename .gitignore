@@ -1,3 +1,5 @@
 config.ps1
 local.settings.json
 runlocal.ps1
+registerApp-PS/modules/
+registerApp-PS/additionalmodules/
