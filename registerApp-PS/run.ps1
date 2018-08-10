@@ -37,7 +37,10 @@ Connect-AzureAD -TenantId  $tenantid -ApplicationId $applicationId -CertificateT
 
 $appExist = Get-AzureADApplication -filter "DisplayName eq '$applicationname'"
 
+# om appen ikke finnes, registrer med alle parametere
 if (!($appExist)) {
+    $GroupMembershipClaims = "SecurityGroup"
+    $ClaimsPolicy = "53eccc94-e7d4-4c1b-9d25-62baefaab0df" #53eccc94-e7d4-4c1b-9d25-62baefaab0df = preprod. c7880a6d-ab30-4fba-be66-4c41d7e6f22f = prod
 
     Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenantid
 
@@ -50,22 +53,11 @@ if (!($appExist)) {
     $accessTokenAD = $tokenResponseAD.access_token
 
 
-
-
-
-
-    $GroupMembershipClaims = "SecurityGroup"
-    $ClaimsPolicy = "53eccc94-e7d4-4c1b-9d25-62baefaab0df" #53eccc94-e7d4-4c1b-9d25-62baefaab0df = preprod. c7880a6d-ab30-4fba-be66-4c41d7e6f22f = prod
-
-
+    # create app secret
     $key = Create-AesKey
 
-
-
     $startdate = Get-Date
-    
-    
-    
+   
     $aadSecret = @{
         'startDate'=$startdate
         'endDate'=$startdate.AddYears(2)
@@ -75,14 +67,14 @@ if (!($appExist)) {
     
     $secret = ConvertTo-SecureString -string $key -AsPlainText -Force
     
-    
     $vaultSecret = Set-AzureKeyVaultSecret -VaultName $vaultname -name $($applicationName -Replace('[\W]','')) -SecretValue $secret
     
     
+    #regsiter application
     $app = New-AzureADApplication -IdentifierUris $ApplicationURI -DisplayName $ApplicationName -GroupMembershipClaims $GroupMembershipClaims -homepage $ApplicationURI -logoutUrl $logoutURI -PasswordCredentials $aadSecret -ReplyUrls $replyurls
     
     
-    
+    # add owners + andre parametere
     foreach ($owner in $owners)
     {
         $aduser = Get-AzureADUser -objectId $owner
