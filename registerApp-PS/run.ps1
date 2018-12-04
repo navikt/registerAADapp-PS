@@ -12,7 +12,6 @@
 if ($ENV:environment -like "local") {
     Import-Module AzureADPreview
     . .\registerApp-PS\createKey.ps1
-    $vaultname = "azureSelfServiceKeys"
     $requestbody = Get-Content -Raw .\registerApp-PS\input.example.json | ConvertFrom-Json
 
 } else {
@@ -22,11 +21,8 @@ if ($ENV:environment -like "local") {
     Import-Module "D:\home\site\wwwroot\registerApp-PS\additionalmodules\AzureRM.KeyVault\4.3.0\AzureRM.KeyVault.psd1" -Global;
     Import-Module "D:\home\site\wwwroot\registerApp-PS\additionalmodules\AzureRM.Resources\5.5.2\AzureRM.Resources.psd1" -Global;
 
-    $vaultname = "azureSelfServiceKeys"
-
     # POST method: $req
     $requestBody = Get-Content $req -Raw | ConvertFrom-Json
-
 
 }
 
@@ -41,16 +37,12 @@ $claimswebhook =  $ENV:APPSETTING_runbookUrl
 $domainname = $ENV:APPSETTING_domainname
 $subscriptionId = $ENV:APPSETTING_subscriptionId
 
-# POST method: $req
-#$requestBody = Get-Content $req -Raw | ConvertFrom-Json
-
+$vaultname = "azureSelfServiceKeys"
 $securePassword = $appSecret | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $securePassword
 $applicationName = $requestbody.applicationName
 $ApplicationURI = $("https://$DomainName/$($applicationName -Replace('[\W]',''))")
 $logoutURI = "https://login.microsoftonline.com/common/oauth2/logout"
-
-
 
 $replyurls = $($requestbody.replyURLs).replace(" ",",")
 $owners = $($requestbody.owners).replace(" ",",")
@@ -59,7 +51,7 @@ if ($ENV:APPSETTING_domainname -like "trygdeetaten.no") {
     $keyvaultname = $($applicationName -Replace('[\W]','')) + "Q"
     $ClaimsPolicy = "53eccc94-e7d4-4c1b-9d25-62baefaab0df" #53eccc94-e7d4-4c1b-9d25-62baefaab0df = preprod. c7880a6d-ab30-4fba-be66-4c41d7e6f22f = prod
 }else {
-    $keyvaultname = $($applicationName -Replace('[\W]',''))+ "Prod"
+    $keyvaultname = $($applicationName -Replace('[\W]','')) + "Prod"
     $ClaimsPolicy = "c7880a6d-ab30-4fba-be66-4c41d7e6f22f" #53eccc94-e7d4-4c1b-9d25-62baefaab0df = preprod. c7880a6d-ab30-4fba-be66-4c41d7e6f22f = prod
 }
 
@@ -135,8 +127,8 @@ if (!($appExist)) {
     
     
     $teamsbody = ConvertTo-Json -Depth 4 @{
-        title = "Ny applikasjon er registrert i Q"
-        text = "ny Applikasjon er registrert i AzureAD Q, for å assigne riktig policy må følgende powershell kommando kjøres som GlobalAdmin: "
+        title = "Ny applikasjon er registrert i $domainname"
+        text = "ny Applikasjon er registrert i AzureAD for $domainname, for å assigne riktig policy må følgende powershell kommando kjøres som GlobalAdmin: "
         sections = @(
             @{
                 activityTitle = 'Powershell kommando'
@@ -176,10 +168,6 @@ $requestbodyAD =
 $updateApp = Invoke-RestMethod -Method Patch -Uri "https://graph.windows.net/$tenantid/applications/$($app.objectid)?api-version=1.6" -Headers @{"Authorization"="Bearer $accessTokenAD"} -body $requestBodyAD -ContentType "application/json"
 
 # Knytter til NAVident Claims Policy
-#write-host $applicationName
-#$servicePrincipalId = Get-AzureADServicePrincipal -filter "DisplayName eq '$applicationname'"
-#write-host $servicePrincipalId
-#Add-AzureADServicePrincipalPolicy -Id $servicePrincipalId.ObjectId -RefObjectId $ClaimsPolicy
 $claimsbody = @{
     'applicationname' = $applicationName
     'claimspolicy' = $ClaimsPolicy
@@ -189,9 +177,6 @@ $claimsbody = @{
 $claimsbodyJSON = ConvertTo-Json $claimsbody
 
 $addcustomclaims = Invoke-RestMethod -uri $claimswebhook -Method POST -body $claimsbodyJSON -ContentType "application/json"
-
-
-
 
 
 
@@ -237,7 +222,7 @@ Write-Output $owner
         }
 "@
     #Send-MailMessage -from no-reply@nav.no -to $owner -subject "Applikasjonsbestillingen er ferdig utført" -SmtpServer smtp.office365.com -port 587 -usessl -Credential $credential
-    $mailURI = "https://graph.microsoft.com/v1.0/users/kjetil.nordlund@trygdeetaten.no/sendMail"
+    $mailURI = "https://graph.microsoft.com/v1.0/users/no-reply-stilling@nav.no/sendMail"
     Invoke-RestMethod -Method Post -Uri $mailURI -Headers @{"Authorization"="Bearer $accessTokenGraph"} -ContentType application/json -Body $emailbody
 
 }
