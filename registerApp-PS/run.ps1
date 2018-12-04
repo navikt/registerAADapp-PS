@@ -209,7 +209,7 @@ $accessTokenGraph = $tokenResponseGraph.access_token
 
 # Sender mail til bruker med info om applikasjonen
 
-$content="<html>\r\n<head>\r\n<meta http-equiv=\'Content-Type\' content=\'text/html; charset=utf-8\'>\r\n<meta content=\'text/html; charset=us-ascii\'>\r\n</head>\r\n<body>\r\n<b>Opprettelsen av Azure AD applikasjonen $applicationName er ferdig</b></br></br>appID/ClientID: $($app.appID)</br>ClientSecret: https://portal.azure.com/#@trygdeetaten.no/asset/Microsoft_Azure_KeyVault/Secret/$($vaultSecret.id)</br>objectID: $($app.ObjectId)</br></br> Mvh</br>NAIS\r\n</body>\r\n</html>\r\n"
+$content="<html>\r\n<head>\r\n<meta http-equiv=\'Content-Type\' content=\'text/html; charset=utf-8\'>\r\n<meta content=\'text/html; charset=us-ascii\'>\r\n</head>\r\n<body>\r\n<b>Opprettelsen av Azure AD applikasjonen $applicationName er ferdig</b></br></br>appID/ClientID: $($app.appID)</br>ClientSecret: https://portal.azure.com/#@$domainname/asset/Microsoft_Azure_KeyVault/Secret/$($vaultSecret.id)</br>objectID: $($app.ObjectId)</br></br> Mvh</br>NAIS\r\n</body>\r\n</html>\r\n"
 
 foreach ($owner in $owners) {
     $emailbody = @"
