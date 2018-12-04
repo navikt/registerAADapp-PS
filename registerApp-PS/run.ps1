@@ -59,26 +59,49 @@ if ($ENV:APPSETTING_domainname -like "trygdeetaten.no") {
 
 
 # kobler til azure ad med sertifikat som credentials
-Connect-AzureAD -TenantId  $tenantid -ApplicationId $applicationId -CertificateThumbprint $certThumbprint
+try {
+    write-output "Connecting to Azure AD"
+    Connect-AzureAD -TenantId  $tenantid -ApplicationId $applicationId -CertificateThumbprint $certThumbprint -ErrorAction Stop
+} catch {
+    write-error "Connect to Azure AD failed: $($_.Exeption.Message)"
+    exit 1
+}
 
 # sjekker om applikasjon med samme navn finnes fra før.
-$appExist = Get-AzureADApplication -filter "DisplayName eq '$applicationname'"
+try {
+    write-output "check if application already exist"
+    $appExist = Get-AzureADApplication -filter "DisplayName eq '$applicationname'" -ErrorAction stop
+} catch {
+    write-error "Could not find application with name: $applicationname  error:  $($_.Exception.Message)"
+    exit 2
+ }
+
 
 # om appen ikke finnes, registrer med alle parametere
 if (!($appExist)) {
     $GroupMembershipClaims = "SecurityGroup"
    
     # kobler til azure resource manager
-    Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenantid -Subscription $subscriptionId #preprod = "2f230ac3-94ea-48b6-93b9-8b1fc97add0a", prod="e9589aaa-5d01-4d93-a252-9cc27f620f44" 
+    try {
+        write-output "Connecting to Azure RM"
+        Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenantid -Subscription $subscriptionId -ErrorAction stop #preprod = "2f230ac3-94ea-48b6-93b9-8b1fc97add0a", prod="e9589aaa-5d01-4d93-a252-9cc27f620f44" 
+    } catch {
+        write-error "Could not connect to AzureRM: $($_.Exception.Message)"
+        exit 4
+    }
 
-    $requestBodyAD = "grant_type=client_credentials" +
-        "&client_id=$applicationId" +
-        "&client_secret=$appSecretToken" +
-        "&resource=https://graph.windows.net"
+    try {
+        $requestBodyAD = "grant_type=client_credentials" +
+            "&client_id=$applicationId" +
+            "&client_secret=$appSecretToken" +
+            "&resource=https://graph.windows.net"
 
-    $tokenResponseAD = Invoke-RestMethod -Method Post -Uri $tokenAuthURI -body $requestBodyAD -ContentType "application/x-www-form-urlencoded" # Kontakt Microsoft Graph via Rest for å hente token
-    $accessTokenAD = $tokenResponseAD.access_token
-
+        $tokenResponseAD = Invoke-RestMethod -Method Post -Uri $tokenAuthURI -body $requestBodyAD -ContentType "application/x-www-form-urlencoded" # Kontakt Microsoft Graph via Rest for å hente token
+        $accessTokenAD = $tokenResponseAD.access_token
+    } catch {
+        write-error "Unable to get token for grap.windows.net: $($_.Exception.Message)"
+        exit 4
+    }
 
     # create app secret
     $key = Create-AesKey
@@ -98,64 +121,51 @@ if (!($appExist)) {
     $reqGraph.ResourceAccess = $appPermission1
     
     #regsiter application
-    $app = New-AzureADApplication -IdentifierUris $ApplicationURI -DisplayName $ApplicationName -GroupMembershipClaims $GroupMembershipClaims -homepage $ApplicationURI -logoutUrl $logoutURI -PasswordCredentials $aadSecret -ReplyUrls $replyurls -RequiredResourceAccess $reqGraph
-    $resServicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $app.appID
-    
+    try {
+        Write-Output "Registering the application"
+        $app = New-AzureADApplication -IdentifierUris $ApplicationURI -DisplayName $ApplicationName -GroupMembershipClaims $GroupMembershipClaims -homepage $ApplicationURI -logoutUrl $logoutURI -PasswordCredentials $aadSecret -ReplyUrls $replyurls -RequiredResourceAccess $reqGraph -ErrorAction stop
+        $resServicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $app.appID
+    } catch {
+        write-error "could not register application with name: $applicationname  error: $($_.Exception.Message)"
+        exit 5
+    }
 
 
 
     # oppretter ny keyvault
-    $keyvault = New-AzureRmKeyVault -name $keyvaultname -ResourceGroupName AzureSelfServiceKeyVault -Location "North Europe"
-    Set-AzureRmKeyVaultAccessPolicy -VaultName $keyvaultname -PermissionsToSecrets set -ServicePrincipalName $ApplicationId
+    try {
+        Write-Output "createing new keyvault for the application"
+        $keyvault = New-AzureRmKeyVault -name $keyvaultname -ResourceGroupName AzureSelfServiceKeyVault -Location "North Europe"
+        Set-AzureRmKeyVaultAccessPolicy -VaultName $keyvaultname -PermissionsToSecrets set -ServicePrincipalName $ApplicationId -ErrorAction stop
 
-    # skriver app secret til Azure keyvault
-    $vaultSecret = Set-AzureKeyVaultSecret -VaultName $keyvaultname -name $keyvaultname -SecretValue $secret
-    
+        # skriver app secret til Azure keyvault
+        $vaultSecret = Set-AzureKeyVaultSecret -VaultName $keyvaultname -name $keyvaultname -SecretValue $secret -ErrorAction stop
+    } catch {
+        write-error "Unable to create or write to keyvault: $($_.Exception.Message)"
+        exit 6
+    }
   
     
     # add owners + andre parametere
     foreach ($owner in $owners)
     {
-        $aduser = Get-AzureADUser -objectId $owner
-        Add-AzureADApplicationOwner -objectid $app.ObjectId -RefObjectId $aduser.ObjectId
-        # Set keyvault read permission
-        Set-AzureRmKeyVaultAccessPolicy -VaultName $keyvaultname -PermissionsToSecrets get,list -UserPrincipalName $owner
+        $AddOwnerError = $null
+        DO 
+        {   
+            Write-Output "adding $owner as owner to the application. errorcount: $($addownererror.count)"
+            if (!([string]::IsNullOrEmpty($AddOwnerError))) {start-sleep 5}
+            $aduser = Get-AzureADUser -objectId $owner
+            Add-AzureADApplicationOwner -objectid $app.ObjectId -RefObjectId $aduser.ObjectId -ErrorVariable +AddOwnerError
+            # Set keyvault read permission
+            Set-AzureRmKeyVaultAccessPolicy -VaultName $keyvaultname -PermissionsToSecrets get,list -UserPrincipalName $owner -ErrorVariable +AddOwnerError
+            
+        } Until ([string]::IsNullOrEmpty($AddOwnerError) -or $AddOwnerError.count -eq "5" )
+        if ($AddOwnerError -eq "5") {
+            write-warning "could not add owner to application after 5 retries: "
+        }
     }
     
-    
-    
-    
-    
-    $teamsbody = ConvertTo-Json -Depth 4 @{
-        title = "Ny applikasjon er registrert i $domainname"
-        text = "ny Applikasjon er registrert i AzureAD for $domainname, for å assigne riktig policy må følgende powershell kommando kjøres som GlobalAdmin: "
-        sections = @(
-            @{
-                activityTitle = 'Powershell kommando'
-                activityText = "Add-AzureADServicePrincipalPolicy -Id $($resServicePrincipal.Id) -RefObjectId $ClaimsPolicy"
-            }
-            @{
-                title = 'Detaljer'
-                facts = @{
-                    name = 'Applikasjonsnavn'
-                    value = $applicationname
-                },
-                @{
-                    name = "Eiere"
-                    value = $owners
-                },
-                @{
-                    name = "Applikasjons URI"
-                    value = $ApplicationURI
-                }
-    
-            }
-        )
-    }
-    
-    if (!($ENV:environment = "local")) {
-        Invoke-RestMethod -uri $secretWebhook -Method Post -Body $teamsbody -ContentType 'application/json'
-    }
+ 
     
 # oppdaterer app med acceptmappedclaims = true
 $requestbodyAD =
@@ -175,7 +185,7 @@ $claimsbody = @{
    }
 
 $claimsbodyJSON = ConvertTo-Json $claimsbody
-
+Write-Output "adding NAVident ClaimsPolicy to the new application"
 $addcustomclaims = Invoke-RestMethod -uri $claimswebhook -Method POST -body $claimsbodyJSON -ContentType "application/json"
 
 
@@ -202,7 +212,6 @@ $accessTokenGraph = $tokenResponseGraph.access_token
 $content="<html>\r\n<head>\r\n<meta http-equiv=\'Content-Type\' content=\'text/html; charset=utf-8\'>\r\n<meta content=\'text/html; charset=us-ascii\'>\r\n</head>\r\n<body>\r\n<b>Opprettelsen av Azure AD applikasjonen $applicationName er ferdig</b></br></br>appID/ClientID: $($app.appID)</br>ClientSecret: https://portal.azure.com/#@trygdeetaten.no/asset/Microsoft_Azure_KeyVault/Secret/$($vaultSecret.id)</br>objectID: $($app.ObjectId)</br></br> Mvh</br>NAIS\r\n</body>\r\n</html>\r\n"
 
 foreach ($owner in $owners) {
-Write-Output $owner
     $emailbody = @"
         {
         "message" : {
@@ -221,10 +230,15 @@ Write-Output $owner
         }
         }
 "@
-    #Send-MailMessage -from no-reply@nav.no -to $owner -subject "Applikasjonsbestillingen er ferdig utført" -SmtpServer smtp.office365.com -port 587 -usessl -Credential $credential
-    $mailURI = "https://graph.microsoft.com/v1.0/users/no-reply-stilling@nav.no/sendMail"
-    Invoke-RestMethod -Method Post -Uri $mailURI -Headers @{"Authorization"="Bearer $accessTokenGraph"} -ContentType application/json -Body $emailbody
 
+   
+    write-output "sending info mail to $owner"
+    $mailURI = "https://graph.microsoft.com/v1.0/users/$owner/sendMail"
+    Invoke-RestMethod -Method Post -Uri $mailURI -Headers @{"Authorization"="Bearer $accessTokenGraph"} -ContentType application/json -Body $emailbody -ErrorVariable failedmail
+    
+    if ($failedmail) {
+        Write-warning "sending mail to $owner failed"
+    }
 }
 
 
@@ -235,7 +249,7 @@ $output
 
 # Om appen finnes fra før, kun oppdater owners og replyurls
 else {
-
+    $error = $null
     $appreplyurls = (Get-AzureADApplication -ObjectId $appExist.objectid).replyurls
 
     $compReplyurls = Compare-Object -ReferenceObject $appreplyurls -DifferenceObject $replyurls
@@ -265,14 +279,14 @@ else {
     $addowner = Compare-Object -ReferenceObject $appownerComp -DifferenceObject $ownerComp | where sideindicator -eq "=>"
     $removeOwner = Compare-Object -ReferenceObject $appownerComp -DifferenceObject $ownerComp | where sideindicator -eq "<="
 
-    # Legger til nye eiere i konfigfil
+    # Legger til nye eiere i konfigfila
     foreach ($owner in $addowner)
     {
         $aduser = Get-AzureADUser -filter "UserPrincipalName eq '$($owner.inputObject)'"
         Add-AzureADApplicationOwner -objectid $appExist.ObjectId -RefObjectId $aduser.ObjectId
     }
 
-    # fjerner eiere som er tatt vekk i konfigfil
+    # fjerner eiere som er tatt vekk i konfigfila
     foreach ($owner in $removeOwner) {
         Write-Output $owner.inputObject
         $aduser = Get-AzureADUser -filter "UserPrincipalName eq '$($owner.inputObject)'"
@@ -290,6 +304,7 @@ else {
         appExist = $true
         ReplyURLupdate = $replyurls
         ownersUpdate = $newowners.UserPrincipalName
+        error = $Error
     }
     
     $output
