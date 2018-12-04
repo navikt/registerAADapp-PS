@@ -1,0 +1,304 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">AzureRM.Resources</S>
+      <S N="Version">5.5.2</S>
+      <S N="Type">Module</S>
+      <S N="Description">Microsoft Azure PowerShell - Azure Resource Manager cmdlets.  Manages subscriptions, tenants, resource groups, deployment templates, providers, and resource permissions in Azure Resource Manager.  Provides cmdlets for managing resources generically across resource providers.</S>
+      <S N="Author">Microsoft Corporation</S>
+      <S N="CompanyName">Microsoft Corporation</S>
+      <S N="Copyright">Microsoft Corporation. All rights reserved.</S>
+      <Obj N="PublishedDate" RefId="1">
+        <TN RefId="1">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+      </Obj>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://aka.ms/azps-license</URI>
+      <URI N="ProjectUri">https://github.com/Azure/azure-powershell</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="2">
+        <TN RefId="2">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>Azure</S>
+          <S>ResourceManager</S>
+          <S>ARM</S>
+          <S>Provider</S>
+          <S>ResourceGroup</S>
+          <S>Deployment</S>
+          <S>ActiveDirectory</S>
+          <S>Authorization</S>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="3">
+        <TN RefId="3">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="6">
+              <TNRef RefId="2" />
+              <LST>
+                <S>Get-AzureRmProviderOperation</S>
+                <S>Remove-AzureRmRoleAssignment</S>
+                <S>Get-AzureRmRoleAssignment</S>
+                <S>New-AzureRmRoleAssignment</S>
+                <S>Get-AzureRmRoleDefinition</S>
+                <S>New-AzureRmRoleDefinition</S>
+                <S>Set-AzureRmRoleDefinition</S>
+                <S>Remove-AzureRmRoleDefinition</S>
+                <S>Get-AzureRmADAppCredential</S>
+                <S>Get-AzureRmADApplication</S>
+                <S>Get-AzureRmADGroupMember</S>
+                <S>Get-AzureRmADGroup</S>
+                <S>Get-AzureRmADServicePrincipal</S>
+                <S>Get-AzureRmADSpCredential</S>
+                <S>Get-AzureRmADUser</S>
+                <S>New-AzureRmADAppCredential</S>
+                <S>New-AzureRmADSpCredential</S>
+                <S>New-AzureRmADUser</S>
+                <S>Remove-AzureRmADAppCredential</S>
+                <S>Remove-AzureRmADApplication</S>
+                <S>New-AzureRmADApplication</S>
+                <S>Remove-AzureRmADServicePrincipal</S>
+                <S>New-AzureRmADServicePrincipal</S>
+                <S>Remove-AzureRmADSpCredential</S>
+                <S>Remove-AzureRmADUser</S>
+                <S>Set-AzureRmADApplication</S>
+                <S>Set-AzureRmADServicePrincipal</S>
+                <S>Set-AzureRmADUser</S>
+                <S>Remove-AzureRmResourceGroup</S>
+                <S>Get-AzureRmProviderFeature</S>
+                <S>Register-AzureRmProviderFeature</S>
+                <S>Get-AzureRmLocation</S>
+                <S>Find-AzureRmResourceGroup</S>
+                <S>Export-AzureRmResourceGroup</S>
+                <S>Get-AzureRmResourceProvider</S>
+                <S>Register-AzureRmResourceProvider</S>
+                <S>Unregister-AzureRmResourceProvider</S>
+                <S>Get-AzureRmResourceGroupDeployment</S>
+                <S>New-AzureRmResourceGroupDeployment</S>
+                <S>Remove-AzureRmResourceGroupDeployment</S>
+                <S>Stop-AzureRmResourceGroupDeployment</S>
+                <S>Test-AzureRmResourceGroupDeployment</S>
+                <S>Set-AzureRmResourceGroup</S>
+                <S>New-AzureRmResourceGroup</S>
+                <S>Get-AzureRmResourceGroup</S>
+                <S>Save-AzureRmResourceGroupDeploymentTemplate</S>
+                <S>Get-AzureRmResourceGroupDeploymentOperation</S>
+                <S>Get-AzureRmResourceLock</S>
+                <S>Invoke-AzureRmResourceAction</S>
+                <S>Find-AzureRmResource</S>
+                <S>Move-AzureRmResource</S>
+                <S>New-AzureRmResourceLock</S>
+                <S>Get-AzureRmPolicyAssignment</S>
+                <S>Get-AzureRmPolicyDefinition</S>
+                <S>Get-AzureRmPolicySetDefinition</S>
+                <S>New-AzureRmPolicyAssignment</S>
+                <S>New-AzureRmPolicyDefinition</S>
+                <S>New-AzureRmPolicySetDefinition</S>
+                <S>Remove-AzureRmPolicyAssignment</S>
+                <S>Remove-AzureRmPolicyDefinition</S>
+                <S>Remove-AzureRmPolicySetDefinition</S>
+                <S>Set-AzureRmPolicyAssignment</S>
+                <S>Set-AzureRmPolicyDefinition</S>
+                <S>Set-AzureRmPolicySetDefinition</S>
+                <S>Remove-AzureRmResource</S>
+                <S>Remove-AzureRmResourceLock</S>
+                <S>Set-AzureRmResource</S>
+                <S>New-AzureRmResource</S>
+                <S>Set-AzureRmResourceLock</S>
+                <S>Get-AzureRmResource</S>
+                <S>Get-AzureRmManagedApplicationDefinition</S>
+                <S>New-AzureRmManagedApplicationDefinition</S>
+                <S>Set-AzureRmManagedApplicationDefinition</S>
+                <S>Remove-AzureRmManagedApplicationDefinition</S>
+                <S>Get-AzureRmManagedApplication</S>
+                <S>New-AzureRmManagedApplication</S>
+                <S>Set-AzureRmManagedApplication</S>
+                <S>Remove-AzureRmManagedApplication</S>
+                <S>Get-AzureRmResourceProviderAction</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Obj N="Value" RefId="7">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Workflow</S>
+            <Obj N="Value" RefId="8">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Obj N="Value" RefId="9">
+              <TNRef RefId="2" />
+              <LST>
+                <S>Get-AzureRmProviderOperation</S>
+                <S>Remove-AzureRmRoleAssignment</S>
+                <S>Get-AzureRmRoleAssignment</S>
+                <S>New-AzureRmRoleAssignment</S>
+                <S>Get-AzureRmRoleDefinition</S>
+                <S>New-AzureRmRoleDefinition</S>
+                <S>Set-AzureRmRoleDefinition</S>
+                <S>Remove-AzureRmRoleDefinition</S>
+                <S>Get-AzureRmADAppCredential</S>
+                <S>Get-AzureRmADApplication</S>
+                <S>Get-AzureRmADGroupMember</S>
+                <S>Get-AzureRmADGroup</S>
+                <S>Get-AzureRmADServicePrincipal</S>
+                <S>Get-AzureRmADSpCredential</S>
+                <S>Get-AzureRmADUser</S>
+                <S>New-AzureRmADAppCredential</S>
+                <S>New-AzureRmADSpCredential</S>
+                <S>New-AzureRmADUser</S>
+                <S>Remove-AzureRmADAppCredential</S>
+                <S>Remove-AzureRmADApplication</S>
+                <S>New-AzureRmADApplication</S>
+                <S>Remove-AzureRmADServicePrincipal</S>
+                <S>New-AzureRmADServicePrincipal</S>
+                <S>Remove-AzureRmADSpCredential</S>
+                <S>Remove-AzureRmADUser</S>
+                <S>Set-AzureRmADApplication</S>
+                <S>Set-AzureRmADServicePrincipal</S>
+                <S>Set-AzureRmADUser</S>
+                <S>Remove-AzureRmResourceGroup</S>
+                <S>Get-AzureRmProviderFeature</S>
+                <S>Register-AzureRmProviderFeature</S>
+                <S>Get-AzureRmLocation</S>
+                <S>Find-AzureRmResourceGroup</S>
+                <S>Export-AzureRmResourceGroup</S>
+                <S>Get-AzureRmResourceProvider</S>
+                <S>Register-AzureRmResourceProvider</S>
+                <S>Unregister-AzureRmResourceProvider</S>
+                <S>Get-AzureRmResourceGroupDeployment</S>
+                <S>New-AzureRmResourceGroupDeployment</S>
+                <S>Remove-AzureRmResourceGroupDeployment</S>
+                <S>Stop-AzureRmResourceGroupDeployment</S>
+                <S>Test-AzureRmResourceGroupDeployment</S>
+                <S>Set-AzureRmResourceGroup</S>
+                <S>New-AzureRmResourceGroup</S>
+                <S>Get-AzureRmResourceGroup</S>
+                <S>Save-AzureRmResourceGroupDeploymentTemplate</S>
+                <S>Get-AzureRmResourceGroupDeploymentOperation</S>
+                <S>Get-AzureRmResourceLock</S>
+                <S>Invoke-AzureRmResourceAction</S>
+                <S>Find-AzureRmResource</S>
+                <S>Move-AzureRmResource</S>
+                <S>New-AzureRmResourceLock</S>
+                <S>Get-AzureRmPolicyAssignment</S>
+                <S>Get-AzureRmPolicyDefinition</S>
+                <S>Get-AzureRmPolicySetDefinition</S>
+                <S>New-AzureRmPolicyAssignment</S>
+                <S>New-AzureRmPolicyDefinition</S>
+                <S>New-AzureRmPolicySetDefinition</S>
+                <S>Remove-AzureRmPolicyAssignment</S>
+                <S>Remove-AzureRmPolicyDefinition</S>
+                <S>Remove-AzureRmPolicySetDefinition</S>
+                <S>Set-AzureRmPolicyAssignment</S>
+                <S>Set-AzureRmPolicyDefinition</S>
+                <S>Set-AzureRmPolicySetDefinition</S>
+                <S>Remove-AzureRmResource</S>
+                <S>Remove-AzureRmResourceLock</S>
+                <S>Set-AzureRmResource</S>
+                <S>New-AzureRmResource</S>
+                <S>Set-AzureRmResourceLock</S>
+                <S>Get-AzureRmResource</S>
+                <S>Get-AzureRmManagedApplicationDefinition</S>
+                <S>New-AzureRmManagedApplicationDefinition</S>
+                <S>Set-AzureRmManagedApplicationDefinition</S>
+                <S>Remove-AzureRmManagedApplicationDefinition</S>
+                <S>Get-AzureRmManagedApplication</S>
+                <S>New-AzureRmManagedApplication</S>
+                <S>Set-AzureRmManagedApplication</S>
+                <S>Remove-AzureRmManagedApplication</S>
+              </LST>
+            </Obj>
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">* Updated to the latest version of the Azure ClientRuntime</S>
+      <Obj N="Dependencies" RefId="10">
+        <TNRef RefId="2" />
+        <LST>
+          <Obj RefId="11">
+            <TN RefId="4">
+              <T>System.Collections.Specialized.OrderedDictionary</T>
+              <T>System.Object</T>
+            </TN>
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">AzureRM.Profile</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">4.6.0</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:AzureRM.Profile/4.6.0</S>
+              </En>
+            </DCT>
+          </Obj>
+        </LST>
+      </Obj>
+<S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2/</S>
+<S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="12">
+        <TNRef RefId="1" />
+        <MS>
+          <S N="copyright">Microsoft Corporation. All rights reserved.</S>
+          <S N="description">Microsoft Azure PowerShell - Azure Resource Manager cmdlets.  Manages subscriptions, tenants, resource groups, deployment templates, providers, and resource permissions in Azure Resource Manager.  Provides cmdlets for managing resources generically across resource providers.</S>
+          <S N="requireLicenseAcceptance">True</S>
+          <S N="releaseNotes">* Updated to the latest version of the Azure ClientRuntime</S>
+          <S N="isLatestVersion">False</S>
+          <S N="isAbsoluteLatestVersion">False</S>
+          <S N="tags">Azure ResourceManager ARM Provider ResourceGroup Deployment ActiveDirectory Authorization PSModule PSIncludes_Cmdlet PSCmdlet_Get-AzureRmProviderOperation PSCmdlet_Remove-AzureRmRoleAssignment PSCmdlet_Get-AzureRmRoleAssignment PSCmdlet_New-AzureRmRoleAssignment PSCmdlet_Get-AzureRmRoleDefinition PSCmdlet_New-AzureRmRoleDefinition PSCmdlet_Set-AzureRmRoleDefinition PSCmdlet_Remove-AzureRmRoleDefinition PSCmdlet_Get-AzureRmADAppCredential PSCmdlet_Get-AzureRmADApplication PSCmdlet_Get-AzureRmADGroupMember PSCmdlet_Get-AzureRmADGroup PSCmdlet_Get-AzureRmADServicePrincipal PSCmdlet_Get-AzureRmADSpCredential PSCmdlet_Get-AzureRmADUser PSCmdlet_New-AzureRmADAppCredential PSCmdlet_New-AzureRmADSpCredential PSCmdlet_New-AzureRmADUser PSCmdlet_Remove-AzureRmADAppCredential PSCmdlet_Remove-AzureRmADApplication PSCmdlet_New-AzureRmADApplication PSCmdlet_Remove-AzureRmADServicePrincipal PSCmdlet_New-AzureRmADServicePrincipal PSCmdlet_Remove-AzureRmADSpCredential PSCmdlet_Remove-AzureRmADUser PSCmdlet_Set-AzureRmADApplication PSCmdlet_Set-AzureRmADServicePrincipal PSCmdlet_Set-AzureRmADUser PSCmdlet_Remove-AzureRmResourceGroup PSCmdlet_Get-AzureRmProviderFeature PSCmdlet_Register-AzureRmProviderFeature PSCmdlet_Get-AzureRmLocation PSCmdlet_Find-AzureRmResourceGroup PSCmdlet_Export-AzureRmResourceGroup PSCmdlet_Get-AzureRmResourceProvider PSCmdlet_Register-AzureRmResourceProvider PSCmdlet_Unregister-AzureRmResourceProvider PSCmdlet_Get-AzureRmResourceGroupDeployment PSCmdlet_New-AzureRmResourceGroupDeployment PSCmdlet_Remove-AzureRmResourceGroupDeployment PSCmdlet_Stop-AzureRmResourceGroupDeployment PSCmdlet_Test-AzureRmResourceGroupDeployment PSCmdlet_Set-AzureRmResourceGroup PSCmdlet_New-AzureRmResourceGroup PSCmdlet_Get-AzureRmResourceGroup PSCmdlet_Save-AzureRmResourceGroupDeploymentTemplate PSCmdlet_Get-AzureRmResourceGroupDeploymentOperation PSCmdlet_Get-AzureRmResourceLock PSCmdlet_Invoke-AzureRmResourceAction PSCmdlet_Find-AzureRmResource PSCmdlet_Move-AzureRmResource PSCmdlet_New-AzureRmResourceLock PSCmdlet_Get-AzureRmPolicyAssignment PSCmdlet_Get-AzureRmPolicyDefinition PSCmdlet_Get-AzureRmPolicySetDefinition PSCmdlet_New-AzureRmPolicyAssignment PSCmdlet_New-AzureRmPolicyDefinition PSCmdlet_New-AzureRmPolicySetDefinition PSCmdlet_Remove-AzureRmPolicyAssignment PSCmdlet_Remove-AzureRmPolicyDefinition PSCmdlet_Remove-AzureRmPolicySetDefinition PSCmdlet_Set-AzureRmPolicyAssignment PSCmdlet_Set-AzureRmPolicyDefinition PSCmdlet_Set-AzureRmPolicySetDefinition PSCmdlet_Remove-AzureRmResource PSCmdlet_Remove-AzureRmResourceLock PSCmdlet_Set-AzureRmResource PSCmdlet_New-AzureRmResource PSCmdlet_Set-AzureRmResourceLock PSCmdlet_Get-AzureRmResource PSCmdlet_Get-AzureRmManagedApplicationDefinition PSCmdlet_New-AzureRmManagedApplicationDefinition PSCmdlet_Set-AzureRmManagedApplicationDefinition PSCmdlet_Remove-AzureRmManagedApplicationDefinition PSCmdlet_Get-AzureRmManagedApplication PSCmdlet_New-AzureRmManagedApplication PSCmdlet_Set-AzureRmManagedApplication PSCmdlet_Remove-AzureRmManagedApplication PSCommand_Get-AzureRmProviderOperation PSCommand_Remove-AzureRmRoleAssignment PSCommand_Get-AzureRmRoleAssignment PSCommand_New-AzureRmRoleAssignment PSCommand_Get-AzureRmRoleDefinition PSCommand_New-AzureRmRoleDefinition PSCommand_Set-AzureRmRoleDefinition PSCommand_Remove-AzureRmRoleDefinition PSCommand_Get-AzureRmADAppCredential PSCommand_Get-AzureRmADApplication PSCommand_Get-AzureRmADGroupMember PSCommand_Get-AzureRmADGroup PSCommand_Get-AzureRmADServicePrincipal PSCommand_Get-AzureRmADSpCredential PSCommand_Get-AzureRmADUser PSCommand_New-AzureRmADAppCredential PSCommand_New-AzureRmADSpCredential PSCommand_New-AzureRmADUser PSCommand_Remove-AzureRmADAppCredential PSCommand_Remove-AzureRmADApplication PSCommand_New-AzureRmADApplication PSCommand_Remove-AzureRmADServicePrincipal PSCommand_New-AzureRmADServicePrincipal PSCommand_Remove-AzureRmADSpCredential PSCommand_Remove-AzureRmADUser PSCommand_Set-AzureRmADApplication PSCommand_Set-AzureRmADServicePrincipal PSCommand_Set-AzureRmADUser PSCommand_Remove-AzureRmResourceGroup PSCommand_Get-AzureRmProviderFeature PSCommand_Register-AzureRmProviderFeature PSCommand_Get-AzureRmLocation PSCommand_Find-AzureRmResourceGroup PSCommand_Export-AzureRmResourceGroup PSCommand_Get-AzureRmResourceProvider PSCommand_Register-AzureRmResourceProvider PSCommand_Unregister-AzureRmResourceProvider PSCommand_Get-AzureRmResourceGroupDeployment PSCommand_New-AzureRmResourceGroupDeployment PSCommand_Remove-AzureRmResourceGroupDeployment PSCommand_Stop-AzureRmResourceGroupDeployment PSCommand_Test-AzureRmResourceGroupDeployment PSCommand_Set-AzureRmResourceGroup PSCommand_New-AzureRmResourceGroup PSCommand_Get-AzureRmResourceGroup PSCommand_Save-AzureRmResourceGroupDeploymentTemplate PSCommand_Get-AzureRmResourceGroupDeploymentOperation PSCommand_Get-AzureRmResourceLock PSCommand_Invoke-AzureRmResourceAction PSCommand_Find-AzureRmResource PSCommand_Move-AzureRmResource PSCommand_New-AzureRmResourceLock PSCommand_Get-AzureRmPolicyAssignment PSCommand_Get-AzureRmPolicyDefinition PSCommand_Get-AzureRmPolicySetDefinition PSCommand_New-AzureRmPolicyAssignment PSCommand_New-AzureRmPolicyDefinition PSCommand_New-AzureRmPolicySetDefinition PSCommand_Remove-AzureRmPolicyAssignment PSCommand_Remove-AzureRmPolicyDefinition PSCommand_Remove-AzureRmPolicySetDefinition PSCommand_Set-AzureRmPolicyAssignment PSCommand_Set-AzureRmPolicyDefinition PSCommand_Set-AzureRmPolicySetDefinition PSCommand_Remove-AzureRmResource PSCommand_Remove-AzureRmResourceLock PSCommand_Set-AzureRmResource PSCommand_New-AzureRmResource PSCommand_Set-AzureRmResourceLock PSCommand_Get-AzureRmResource PSCommand_Get-AzureRmManagedApplicationDefinition PSCommand_New-AzureRmManagedApplicationDefinition PSCommand_Set-AzureRmManagedApplicationDefinition PSCommand_Remove-AzureRmManagedApplicationDefinition PSCommand_Get-AzureRmManagedApplication PSCommand_New-AzureRmManagedApplication PSCommand_Set-AzureRmManagedApplication PSCommand_Remove-AzureRmManagedApplication PSCommand_Get-AzureRmResourceProviderAction</S>
+          <S N="developmentDependency">False</S>
+          <B N="IsPrerelease">false</B>
+        </MS>
+      </Obj>
+
+    </MS>
+  </Obj>
+</Objs>
+
+
+

@@ -1,0 +1,186 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">AzureRM.Profile</S>
+      <S N="Version">4.6.0</S>
+      <S N="Type">Module</S>
+      <S N="Description">Microsoft Azure PowerShell - Profile credential management cmdlets for Azure Resource Manager</S>
+      <S N="Author">Microsoft Corporation</S>
+      <S N="CompanyName">Microsoft Corporation</S>
+      <S N="Copyright">Microsoft Corporation. All rights reserved.</S>
+      <Obj N="PublishedDate" RefId="1">
+        <TN RefId="1">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+      </Obj>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://aka.ms/azps-license</URI>
+      <URI N="ProjectUri">https://github.com/Azure/azure-powershell</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="2">
+        <TN RefId="2">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>Azure</S>
+          <S>ResourceManager</S>
+          <S>ARM</S>
+          <S>Profile</S>
+          <S>Authentication</S>
+          <S>Environment</S>
+          <S>Subscription</S>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="3">
+        <TN RefId="3">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="6">
+              <TNRef RefId="2" />
+              <LST>
+                <S>Disable-AzureRmDataCollection</S>
+                <S>Disable-AzureRmContextAutosave</S>
+                <S>Enable-AzureRmDataCollection</S>
+                <S>Enable-AzureRmContextAutosave</S>
+                <S>Remove-AzureRmEnvironment</S>
+                <S>Get-AzureRmEnvironment</S>
+                <S>Set-AzureRmEnvironment</S>
+                <S>Add-AzureRmEnvironment</S>
+                <S>Get-AzureRmSubscription</S>
+                <S>Connect-AzureRmAccount</S>
+                <S>Get-AzureRmContext</S>
+                <S>Set-AzureRmContext</S>
+                <S>Import-AzureRmContext</S>
+                <S>Save-AzureRmContext</S>
+                <S>Get-AzureRmTenant</S>
+                <S>Send-Feedback</S>
+                <S>Resolve-AzureRmError</S>
+                <S>Select-AzureRmContext</S>
+                <S>Rename-AzureRmContext</S>
+                <S>Remove-AzureRmContext</S>
+                <S>Clear-AzureRmContext</S>
+                <S>Disconnect-AzureRmAccount</S>
+                <S>Get-AzureRmContextAutosaveSetting</S>
+                <S>Set-AzureRmDefault</S>
+                <S>Get-AzureRmDefault</S>
+                <S>Clear-AzureRmDefault</S>
+                <S>Add-AzureRmAccount</S>
+                <S>Login-AzAccount</S>
+                <S>Login-AzureRmAccount</S>
+                <S>Remove-AzureRmAccount</S>
+                <S>Logout-AzAccount</S>
+                <S>Logout-AzureRmAccount</S>
+                <S>Select-AzureRmSubscription</S>
+                <S>Resolve-Error</S>
+                <S>Save-AzureRmProfile</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Obj N="Value" RefId="7">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Workflow</S>
+            <Obj N="Value" RefId="8">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Obj N="Value" RefId="9">
+              <TNRef RefId="2" />
+              <LST>
+                <S>Disable-AzureRmDataCollection</S>
+                <S>Disable-AzureRmContextAutosave</S>
+                <S>Enable-AzureRmDataCollection</S>
+                <S>Enable-AzureRmContextAutosave</S>
+                <S>Remove-AzureRmEnvironment</S>
+                <S>Get-AzureRmEnvironment</S>
+                <S>Set-AzureRmEnvironment</S>
+                <S>Add-AzureRmEnvironment</S>
+                <S>Get-AzureRmSubscription</S>
+                <S>Connect-AzureRmAccount</S>
+                <S>Get-AzureRmContext</S>
+                <S>Set-AzureRmContext</S>
+                <S>Import-AzureRmContext</S>
+                <S>Save-AzureRmContext</S>
+                <S>Get-AzureRmTenant</S>
+                <S>Send-Feedback</S>
+                <S>Resolve-AzureRmError</S>
+                <S>Select-AzureRmContext</S>
+                <S>Rename-AzureRmContext</S>
+                <S>Remove-AzureRmContext</S>
+                <S>Clear-AzureRmContext</S>
+                <S>Disconnect-AzureRmAccount</S>
+                <S>Get-AzureRmContextAutosaveSetting</S>
+                <S>Set-AzureRmDefault</S>
+                <S>Get-AzureRmDefault</S>
+                <S>Clear-AzureRmDefault</S>
+              </LST>
+            </Obj>
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">* Updated to the latest version of the Azure ClientRuntime</S>
+      <Obj N="Dependencies" RefId="10">
+        <TNRef RefId="2" />
+        <LST />
+      </Obj>
+<S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2/</S>
+<S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="11">
+        <TNRef RefId="1" />
+        <MS>
+          <S N="copyright">Microsoft Corporation. All rights reserved.</S>
+          <S N="description">Microsoft Azure PowerShell - Profile credential management cmdlets for Azure Resource Manager</S>
+          <S N="requireLicenseAcceptance">True</S>
+          <S N="releaseNotes">* Updated to the latest version of the Azure ClientRuntime</S>
+          <S N="isLatestVersion">False</S>
+          <S N="isAbsoluteLatestVersion">False</S>
+          <S N="tags">Azure ResourceManager ARM Profile Authentication Environment Subscription PSModule PSIncludes_Cmdlet PSCmdlet_Disable-AzureRmDataCollection PSCmdlet_Disable-AzureRmContextAutosave PSCmdlet_Enable-AzureRmDataCollection PSCmdlet_Enable-AzureRmContextAutosave PSCmdlet_Remove-AzureRmEnvironment PSCmdlet_Get-AzureRmEnvironment PSCmdlet_Set-AzureRmEnvironment PSCmdlet_Add-AzureRmEnvironment PSCmdlet_Get-AzureRmSubscription PSCmdlet_Connect-AzureRmAccount PSCmdlet_Get-AzureRmContext PSCmdlet_Set-AzureRmContext PSCmdlet_Import-AzureRmContext PSCmdlet_Save-AzureRmContext PSCmdlet_Get-AzureRmTenant PSCmdlet_Send-Feedback PSCmdlet_Resolve-AzureRmError PSCmdlet_Select-AzureRmContext PSCmdlet_Rename-AzureRmContext PSCmdlet_Remove-AzureRmContext PSCmdlet_Clear-AzureRmContext PSCmdlet_Disconnect-AzureRmAccount PSCmdlet_Get-AzureRmContextAutosaveSetting PSCmdlet_Set-AzureRmDefault PSCmdlet_Get-AzureRmDefault PSCmdlet_Clear-AzureRmDefault PSCommand_Disable-AzureRmDataCollection PSCommand_Disable-AzureRmContextAutosave PSCommand_Enable-AzureRmDataCollection PSCommand_Enable-AzureRmContextAutosave PSCommand_Remove-AzureRmEnvironment PSCommand_Get-AzureRmEnvironment PSCommand_Set-AzureRmEnvironment PSCommand_Add-AzureRmEnvironment PSCommand_Get-AzureRmSubscription PSCommand_Connect-AzureRmAccount PSCommand_Get-AzureRmContext PSCommand_Set-AzureRmContext PSCommand_Import-AzureRmContext PSCommand_Save-AzureRmContext PSCommand_Get-AzureRmTenant PSCommand_Send-Feedback PSCommand_Resolve-AzureRmError PSCommand_Select-AzureRmContext PSCommand_Rename-AzureRmContext PSCommand_Remove-AzureRmContext PSCommand_Clear-AzureRmContext PSCommand_Disconnect-AzureRmAccount PSCommand_Get-AzureRmContextAutosaveSetting PSCommand_Set-AzureRmDefault PSCommand_Get-AzureRmDefault PSCommand_Clear-AzureRmDefault PSCommand_Add-AzureRmAccount PSCommand_Login-AzAccount PSCommand_Login-AzureRmAccount PSCommand_Remove-AzureRmAccount PSCommand_Logout-AzAccount PSCommand_Logout-AzureRmAccount PSCommand_Select-AzureRmSubscription PSCommand_Resolve-Error PSCommand_Save-AzureRmProfile</S>
+          <S N="developmentDependency">False</S>
+          <B N="IsPrerelease">false</B>
+        </MS>
+      </Obj>
+
+    </MS>
+  </Obj>
+</Objs>
+
+
+
