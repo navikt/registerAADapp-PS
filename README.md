@@ -61,3 +61,17 @@ tokenAuthURI = AAD standard token URI
 
 WEWSITE_LOAD_CERTIFICATES = samme thumbprint som certThumbprint
 ```
+
+
+## Deployment:
+
+Commit til "master" trigger autodeployment til Azure Functions i både preprod og prod tenanten.
+
+Bruk "staging" barnchen for commit som ikke skal autodeployes.
+
+
+## Contact:
+
+For spørsmål knyttet til denne funksjonen, Azure AD applications, Azure AD integrasjon:
+
+Nav it slack'en: #bruk-av-tokens

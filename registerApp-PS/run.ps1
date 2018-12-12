@@ -42,7 +42,7 @@ $securePassword = $appSecret | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $securePassword
 $applicationName = $requestbody.applicationName
 $ApplicationURI = $("https://$DomainName/$($applicationName -Replace('[\W]',''))")
-$logoutURI = "https://login.microsoftonline.com/common/oauth2/logout"
+#$logoutURI = "https://login.microsoftonline.com/common/oauth2/logout"
 
 $replyurls = $($requestbody.replyURLs).replace(" ",",")
 $owners = $($requestbody.owners).replace(" ",",")
@@ -123,7 +123,7 @@ if (!($appExist)) {
     #regsiter application
     try {
         Write-Output "Registering the application"
-        $app = New-AzureADApplication -IdentifierUris $ApplicationURI -DisplayName $ApplicationName -GroupMembershipClaims $GroupMembershipClaims -homepage $ApplicationURI -logoutUrl $logoutURI -PasswordCredentials $aadSecret -ReplyUrls $replyurls -RequiredResourceAccess $reqGraph -ErrorAction stop
+        $app = New-AzureADApplication -IdentifierUris $ApplicationURI -DisplayName $ApplicationName -GroupMembershipClaims $GroupMembershipClaims -homepage $ApplicationURI -PasswordCredentials $aadSecret -ReplyUrls $replyurls -RequiredResourceAccess $reqGraph -ErrorAction stop
         $resServicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $app.appID
     } catch {
         write-error "could not register application with name: $applicationname  error: $($_.Exception.Message)"
@@ -174,8 +174,12 @@ $requestbodyAD =
     "acceptMappedClaims": true
 }
 "@
-
-$updateApp = Invoke-RestMethod -Method Patch -Uri "https://graph.windows.net/$tenantid/applications/$($app.objectid)?api-version=1.6" -Headers @{"Authorization"="Bearer $accessTokenAD"} -body $requestBodyAD -ContentType "application/json"
+try {
+    $updateApp = Invoke-RestMethod -Method Patch -Uri "https://graph.windows.net/$tenantid/applications/$($app.objectid)?api-version=1.6" -Headers @{"Authorization"="Bearer $accessTokenAD"} -body $requestBodyAD -ContentType "application/json" -ErrorAction stop
+} catch {
+    write-warning "could not update group to SecurityEnabled group: $($_.Exception.Message)"
+    exit 7
+}
 
 # Knytter til NAVident Claims Policy
 $claimsbody = @{
@@ -212,6 +216,7 @@ $accessTokenGraph = $tokenResponseGraph.access_token
 $content="<html>\r\n<head>\r\n<meta http-equiv=\'Content-Type\' content=\'text/html; charset=utf-8\'>\r\n<meta content=\'text/html; charset=us-ascii\'>\r\n</head>\r\n<body>\r\n<b>Opprettelsen av Azure AD applikasjonen $applicationName er ferdig</b></br></br>appID/ClientID: $($app.appID)</br>ClientSecret: https://portal.azure.com/#@$domainname/asset/Microsoft_Azure_KeyVault/Secret/$($vaultSecret.id)</br>objectID: $($app.ObjectId)</br></br> Mvh</br>NAIS\r\n</body>\r\n</html>\r\n"
 
 foreach ($owner in $owners) {
+    $failedmail = $null
     $emailbody = @"
         {
         "message" : {
